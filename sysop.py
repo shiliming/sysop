@@ -13,7 +13,7 @@ class SystemOp(object):
     """
     con = db.connect("test.db")
     cur=con.cursor()
-    res=cur.execute('select session_id from m_test')
+    res=cur.execute('select session_id from m_test where session_id=?',(session_id,))
     result=res.fetchall()
     con.close()
     if(len(result)>0):
@@ -28,12 +28,13 @@ class SystemOp(object):
     login function
     @rtype:session_id
     """
+    session_id=hash(user+password)
     con = db.connect("test.db")
     cur=con.cursor()
-    res=cur.execute('insert into m_test(name,session_id) values(?,?)',(user,user+password))
+    res=cur.execute('insert into m_test(name,session_id) values(?,?)',(user,session_id))
     con.commit()
     con.close()
-    return user+password
+    return session_id
 
   @ladonize(str,rtype=bool)
   def logout(self,session_id):
