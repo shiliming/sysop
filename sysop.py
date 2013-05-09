@@ -6,11 +6,11 @@ class SystemOp(object):
   .
   """
   @ladonize(str,rtype=str)
-  def test(self,session_id):
+  def islogin(self,session_id):
     """
     Reurn a database result
     @rtype: The result of the database
-    测试方法，测试该session_id是否在登陆状态。
+    测试该session_id是否在登陆状态。
     """
     con = db.connect("test.db")
     cur=con.cursor()
